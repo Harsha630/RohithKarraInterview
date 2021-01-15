@@ -1,0 +1,6 @@
+---
+- name: Name
+  shell: sysctl kern.version | cut -d " " -f 2-
+  register: mac_os
+  ignore_errors: yes
+- debug: msg={{mac_os.stdout}}
