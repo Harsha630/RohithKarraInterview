@@ -1,6 +1,12 @@
 ---
 - name: Name
-  shell: sysctl kern.version | cut -d " " -f 2-
-  register: mac_os
+  shell: uname -a
+  register: uname
   ignore_errors: yes
-- debug: msg={{mac_os.stdout}}
+- debug: msg={{uname.stdout}}
+
+- set_fact:
+    var1: "{{uname.stdout}}"
+- template:
+    src: "myrolenew.j2"
+    dest: "/home/cloud_user/RohithKarraInterview/roles/myrole_new/files/my-template.txt"
