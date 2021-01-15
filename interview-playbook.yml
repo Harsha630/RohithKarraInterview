@@ -5,4 +5,4 @@
   vars:
     custom: "test1234"
   roles:
-    - {role: 'myrole_new'}
+    - {role: 'myrole'}
