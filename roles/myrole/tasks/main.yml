@@ -1,0 +1,45 @@
+---
+  - name: Name
+    shell: uname
+    register: unamelocal
+    ignore_errors: yes
+  - debug: msg={{unamelocal.stdout}}
+
+  - name: get the local IP addr
+    shell: ipconfig getifaddr en0
+    register: ip_addr
+    ignore_errors: yes
+  - debug: msg={{ip_addr.stdout}}
+
+  - name: Get the kernel version
+    shell: uname -r
+    register: kernel_version
+    ignore_errors: yes
+  - debug: msg={{kernel_version.stdout}}
+
+  - name: Get the date
+    shell: date
+    register: date
+    ignore_errors: yes
+  - debug: msg={{date.stdout}}
+# sysctl kern.version
+
+  - name: Get the UID and release version
+    shell: sysctl kern.version | cut -d " " -f 12
+    register: os_releaseversion
+    ignore_errors: yes
+  - debug: msg={{os_releaseversion.stdout}}
+
+  - set_fact:
+      var1: "{{unamelocal.stdout}}"
+      var2: "{{ip_addr.stdout}}"
+      var3: "{{kernel_version.stdout}}"
+      var4: "{{date.stdout}}"
+      var5: "{{os_releaseversion.stdout}}"
+
+  - name: template
+    template:
+      src: "myrole.j2"
+      dest: "/Users/harshachintu/Desktop/rohith/roles/myrole/files/my-template.txt"
+      mode: 0755
+    delegate_to: localhost  
