@@ -1,5 +1,8 @@
 ---
-- hosts: local
+- hosts: localhost
+  connection: local
   gather_facts: false
+  vars:
+    custom: "test1234"
   roles:
     - {role: 'myrole'}
